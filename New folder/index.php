@@ -45,33 +45,82 @@ background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, F
 				}
 				echo $firstname ." ".$lastname ." ".$phoneno ." ".$email ." ".$password; 
 			}
+			if(isset($_POST['update'])){
+				$firstname  = $_POST['firstname'];
+				$lastname   = $_POST['lastname'];
+				$phoneno    = $_POST['phoneno'];
+				$email      = $_POST['email'];
+				$password   = $_POST['password'];
+				$employee_id   = $_POST['empoyee_id'];
+				$update_statement= "update employee_information set employee_name='".$firstname."',
+									employee_email='".$email."',
+									employee_ic='".$password."' where employee_id=".$employee_id;
+
+				if ($conn->query($update_statement) === TRUE) {
+				 echo "scuess update table";
+				}else{
+					 echo "create ypdate error";
+				}
+			}
+
 		?>
+		<?php
+    //to get the url parameter value
+    if(isset($_GET['edit_id'])){
+        echo $_GET['edit_id'];
+
+        $select_whre_statement="select * from employee_information where employee_id=".$_GET['edit_id'];
+        $result_slect = $conn->query($select_whre_statement);
+        if ($result_slect->num_rows > 0) {
+            while($data = $result_slect->fetch_assoc()) {
+                $employee_id=$data['employee_id'];
+                $employee_name=$data['employee_name'];
+                $employee_ic=$data['employee_ic'];
+                $employee_email=$data['employee_email'];
+                $employee_contact=$data['employee_contact'];
+            }
+        }
+
+    }
+
+?>
 	</div>
 	<div class="container">
 		<h2>Registration Form</h2>
 	<form action="" method="post">
 		<div class="form-group">
     <label for="firstname">First Name</label>
-    <input type="text" class="form-control" id="exampleInputfirstname" name="firstname">
+    <input type="text" class="form-control" id="exampleInputfirstname" name="firstname" value="<?php if(isset($_GET['edit_id'])){ echo $employee_name; }?>">
   </div>
   <div class="form-group">
     <label for="lastname">Last Name</label>
-    <input type="text" class="form-control" id="exampleInputlastname" name="lastname">
+    <input type="text" class="form-control" id="exampleInputlastname" name="lastname" value="">
   </div>
   <div class="form-group">
     <label for="phoneno">Phone Number</label>
-    <input type="text" class="form-control" id="exampleInputphoneno" name="phoneno">
+    <input type="text" class="form-control" id="exampleInputphoneno" name="phoneno" value="<?php if(isset($_GET['edit_id'])){ echo $employee_contact; }?>">
   </div>
   <div class="form-group">
     <label for="Email1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" value="<?php if(isset($_GET['edit_id'])){ echo $employee_email; }?>">
   </div>
   <div class="form-group">
     <label for="Password">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword" name="password">
+    <input type="password" class="form-control" id="exampleInputPassword" name="password" value="<?php if(isset($_GET['edit_id'])){ echo $employee_ic; }?>">
   </div>
-  <button type="submit" class="btn btn-primary" name="create">Sign up</button>
+  <?php
+	if(isset($_GET["edit_id"])){
+		echo "<input type='hidden' name='empoyee_id' value=".$employee_id.">";
+		echo '<button type="submit" class="btn btn-primary" name="update">Sign up</button>';
+	}else{
+		echo '<button type="submit" class="btn btn-primary" name="create">Sign up</button>';
+	}
+	
+  ?>
+ <!-- <button type="submit" class="btn btn-primary" name="create">Sign up</button>-->
 </form>
+
+<?php include("list_employeesdetails.php"); ?>
 </div>
 </body>
 </html>
