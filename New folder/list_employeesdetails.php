@@ -20,7 +20,8 @@ if ($result->num_rows > 0) {
    <td><?php echo $data['employee_email']; ?> </td>
    <td><?php echo $data['employee_ic']; ?> </td>
    <td><?php echo $data['employee_contact']; ?> </td>
-   <td><a href="?edit_id=<?php echo $data['employee_id']; ?>" class="btn btn-primary" style="color:white">Edit</a>
+   <td>
+   <a href="?edit_id=<?php echo $data['employee_id']; ?>" class="btn btn-primary" style="color:white">Edit</a>
    <a href="?delete_id=<?php echo $data['employee_id']; ?>" class="btn btn-primary" style="color:white">Delete</a></td>
  <tr>
 
@@ -29,7 +30,18 @@ if ($result->num_rows > 0) {
     <tr>
      <td colspan="8">No data found</td>
     </tr>
-<?php  } ?>
+<?php  } 
+ 
+    if(isset($_GET['delete_id'])){
+        $deelte_id="delete from employee_information where employee_id=".$_GET['delete_id'];
+        	if ($conn->query($deelte_id) === TRUE) {
+				 echo "scuess delete value";
+				}else{
+					 echo "create deter error";
+				}
+    }
+
+?>
 </table>
 
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -30,16 +30,17 @@ if ($conn->query($sql_statement) === TRUE) {
 }else{
 	 echo "create table error";
 }
-*/			
-$sql_insert_statement ="insert into 
+*/	
+#
+/*$sql_insert_statement ="insert into 
 	employee_information(employee_name,employee_email,employee_ic,employee_contact)
 	values('alex','alex@hotmail.com','123123-12-1234','012-999999999')";
-				
+			
 
 if ($conn->query($sql_insert_statement) === TRUE) {
  echo "scuess insert table";
 }else{
 	 echo "create insert error";
-}
+}*/	
 
 ?>

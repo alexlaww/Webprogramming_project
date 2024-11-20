@@ -68,7 +68,10 @@ background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, F
     //to get the url parameter value
     if(isset($_GET['edit_id'])){
         echo $_GET['edit_id'];
-
+		$_SESSION['edit_id'] = $_GET['edit_id'];
+		echo "Session id:".$_SESSION['edit_id'];
+		setcookie('edit_id',$_GET['edit_id'] );
+		echo "cookie:".$_COOKIE['edit_id'];
         $select_whre_statement="select * from employee_information where employee_id=".$_GET['edit_id'];
         $result_slect = $conn->query($select_whre_statement);
         if ($result_slect->num_rows > 0) {
@@ -111,9 +114,9 @@ background: linear-gradient(to right, #CFDEF3, #E0EAFC); /* W3C, IE 10+/ Edge, F
   <?php
 	if(isset($_GET["edit_id"])){
 		echo "<input type='hidden' name='empoyee_id' value=".$employee_id.">";
-		echo '<button type="submit" class="btn btn-primary" name="update">Sign up</button>';
+		echo '<button type="submit" class="btn btn-primary" name="update" value="update">Sign up</button>';
 	}else{
-		echo '<button type="submit" class="btn btn-primary" name="create">Sign up</button>';
+		echo '<button type="submit" class="btn btn-primary" name="create" value="create">Sign up</button>';
 	}
 	
   ?>
